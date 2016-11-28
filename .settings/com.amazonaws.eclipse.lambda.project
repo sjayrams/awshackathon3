@@ -1,0 +1,5 @@
+#Lambda Function Project Metadata
+#Mon Nov 28 13:25:12 PST 2016
+lastDeploymentFunctionName=getQueries
+lastDeploymentBucketName=conservation-international
+lastDeploymentEndpoint=https\://lambda.us-east-1.amazonaws.com/
