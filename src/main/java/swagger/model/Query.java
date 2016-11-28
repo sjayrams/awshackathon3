@@ -43,15 +43,15 @@ public class Query   {
    * Gets or Sets country
    */
   public enum CountryEnum {
-    KENYA("Kenya"),
+    KEN("Kenya"),
     
-    TANZANIA("Tanzania"),
+    TNZ("Tanzania"),
     
-    UGANDA("Uganda"),
+    UGD("Uganda"),
     
-    GHANA("Ghana"),
+    GHN("Ghana"),
     
-    RWANDA("Rwanda");
+    RWD("Rwanda");
 
     private String value;
 

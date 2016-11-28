@@ -1,5 +1,5 @@
 package com.hackathon.lambda;
 
 public enum Column {
-	SOIL,NUTRITION,FOODSECURITY;
+	CIAF,ACCESS,NITROGEN,POTASSIUM,PHOSPHOROUS;
 }
