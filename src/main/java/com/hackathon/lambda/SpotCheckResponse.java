@@ -1,7 +1,7 @@
 package com.hackathon.lambda;
 
 public class SpotCheckResponse {
-	String predicted;
-	String actual;
+	Double predicted;
+	Double actual;
 	Double dieviations;
 }

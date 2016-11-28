@@ -8,7 +8,8 @@ public class LambdaSP implements RequestHandler<SpotPredictRequest,SpotPredictRe
 	@Override
 	public SpotPredictResponse handleRequest(SpotPredictRequest arg0, Context arg1) {
 		SpotPredictResponse spr=new SpotPredictResponse();
-		
+		spr.value=1.00;
+		return spr;
 	}
 
 }
