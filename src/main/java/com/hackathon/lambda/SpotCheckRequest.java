@@ -1,5 +1,10 @@
 package com.hackathon.lambda;
 
-public class SpotCheckRequest {
+import swagger.model.Query.CountryEnum;
 
+public class SpotCheckRequest {
+	Double lat;
+	Double lon;
+	CountryEnum country;
+	Column column;
 }
