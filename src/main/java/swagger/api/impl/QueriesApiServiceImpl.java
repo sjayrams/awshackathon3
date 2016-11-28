@@ -1,18 +1,11 @@
-package io.swagger.api.impl;
+package swagger.api.impl;
 
-import io.swagger.api.*;
-import io.swagger.model.*;
+import swagger.model.Query;
 
-import io.swagger.model.Query;
-import io.swagger.model.Error;
-import io.swagger.model.Data;
+import swagger.api.NotFoundException;
 
-import java.util.List;
-import io.swagger.api.NotFoundException;
-
-import java.io.InputStream;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import swagger.api.ApiResponseMessage;
+import swagger.api.QueriesApiService;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
