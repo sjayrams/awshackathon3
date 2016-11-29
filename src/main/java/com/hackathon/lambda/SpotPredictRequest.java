@@ -56,7 +56,7 @@ public class SpotPredictRequest {
 	public static void main(String[] args){
 		SpotPredictRequest spr = new SpotPredictRequest();
 		spr.column=Column.ACCESS;
-		spr.country=CountryEnum.TNZ;
+		spr.country=CountryEnum.TZA;
 		spr.lat=0.0;
 		spr.lon=0.0;
 		spr.landscape=LandscapeEnum.L000;
