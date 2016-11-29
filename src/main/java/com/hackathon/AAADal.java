@@ -108,7 +108,7 @@ public class AAADal {
 //        } else {
 //            System.out.println("Failed to make connection!");
 //        }
-        return aaaList.size() > 100 ? aaaList.subList(0,99) : aaaList;
+        return aaaList.size() > 20 ? aaaList.subList(0,20) : aaaList;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {

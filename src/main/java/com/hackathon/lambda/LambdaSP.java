@@ -40,7 +40,7 @@ public class LambdaSP implements RequestHandler<SpotPredictRequest,SpotPredictRe
 		sp.handleRequest(spr,null);
 		spr.country=CountryEnum.KEN;
 		sp.handleRequest(spr,null);
-		spr.country=CountryEnum.RWD;
+		spr.country=CountryEnum.RWA;
 		sp.handleRequest(spr, null);
 	}
 }

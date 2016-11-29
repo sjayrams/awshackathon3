@@ -51,7 +51,7 @@ public class Query   {
     
     GHN("Ghana"),
     
-    RWD("Rwanda");
+    RWA("Rwanda");
 
     private String value;
 
