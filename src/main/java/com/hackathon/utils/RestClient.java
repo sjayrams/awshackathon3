@@ -1,24 +1,14 @@
 package com.hackathon.utils;
 
 
-import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
+import com.google.gson.Gson;
+import com.hackathon.lambda.SpotCheckResponse;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
-import org.springframework.retry.RetryCallback;
-import org.springframework.retry.RetryContext;
-import org.springframework.retry.backoff.FixedBackOffPolicy;
-import org.springframework.retry.policy.SimpleRetryPolicy;
-import org.springframework.retry.support.RetryTemplate;
-import org.springframework.web.client.RestTemplate;
+import java.nio.charset.Charset;
 
 
 /**
@@ -27,72 +17,45 @@ import org.springframework.web.client.RestTemplate;
 
 public class RestClient {
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-    public static final RestTemplate restTemplate;
-    public static final RetryTemplate retryTemplate;
 
-    static {
-        restTemplate = getRestTemplate();
-        retryTemplate = getRetryTemplate();
-    }
+    public <T> T post(String url, Object request, Class<T> responseType) {
+        Client client = Client.create();
 
-    public <T> ResponseEntity<T> post(String url, Object request, Class<T> responseType) throws JAXBException {
-        String requestStr = serialize(request);
-        ResponseEntity<T> responseEntity = retryTemplate.execute(new RetryCallback<ResponseEntity<T>, RuntimeException>() {
-            public ResponseEntity<T> doWithRetry(RetryContext context) {
-                return restTemplate.postForEntity(url, requestStr, responseType);
-            }
-        });
-        return responseEntity;
-    }
+        WebResource webResource = client.resource(url);
 
-    public <T> ResponseEntity<T> get(String url, Class<T> responseType) throws InterruptedException {
-        ResponseEntity<T> responseEntity = retryTemplate.execute(new RetryCallback<ResponseEntity<T>, RuntimeException>() {
-            public ResponseEntity<T> doWithRetry(RetryContext context) {
-                return restTemplate.getForEntity(url, responseType);
-            }
+        String input = request.toString();
 
-        });
-        return responseEntity;
-    }
+        ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
 
-    private static RestTemplate getRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new TextHtmlHttpMessageConverter());
-        return restTemplate;
-    }
-
-    private static RetryTemplate getRetryTemplate() {
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
-        retryPolicy.setMaxAttempts(3);
-        FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(500);
-        RetryTemplate template = new RetryTemplate();
-        template.setRetryPolicy(retryPolicy);
-        template.setBackOffPolicy(backOffPolicy);
-        return template;
-    }
-
-    public static class TextHtmlHttpMessageConverter extends Jaxb2RootElementHttpMessageConverter {
-        public TextHtmlHttpMessageConverter() {
-            List<MediaType> types = Arrays.asList(
-                    new MediaType("text", "html", DEFAULT_CHARSET),
-                    new MediaType("application", "xml", DEFAULT_CHARSET),
-                    new MediaType("application", "*+xml", DEFAULT_CHARSET)
-            );
-            super.setSupportedMediaTypes(types);
+        if (response.getStatus() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                    + response.getStatus());
         }
+
+        System.out.println("Output from Server .... \n");
+        return response.getEntity(responseType);
+
     }
 
-    private static String serialize(Object obj) throws JAXBException {
-        if (obj == null) {
-            return "null";
+    public <T> T get(String url, Class<T> responseType) throws InterruptedException {
+        Client client = Client.create();
+
+        WebResource webResource = client.resource(url);
+
+        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+        if (response.getStatus() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                    + response.getStatus());
         }
-        JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
-        Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(obj, stringWriter);
-        return stringWriter.toString().replaceAll(":ns2","").replaceAll("ns2:","");
+
+        return response.getEntity(responseType);
+    }
+
+    public static void main(String[] args) throws JAXBException {
+        RestClient restClient = new RestClient();
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(restClient.post("https://i96lpa9xz4.execute-api.us-east-1.amazonaws.com/mock/mockapi", "{ \"predicted\": 1.5, \"actual\": 1.2, \"dieviations\": 0.3 }", SpotCheckResponse.class)));
     }
 
 }
