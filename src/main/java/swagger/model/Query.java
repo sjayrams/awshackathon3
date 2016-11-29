@@ -25,11 +25,11 @@
 
 package swagger.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Objects;
 
 /**
  * Query
@@ -97,7 +97,6 @@ public class Query   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(value = "")
   public String getName() {
     return name;
   }
@@ -115,7 +114,6 @@ public class Query   {
    * Get country
    * @return country
   **/
-  @ApiModelProperty(value = "")
   public CountryEnum getCountry() {
     return country;
   }
@@ -133,7 +131,6 @@ public class Query   {
    * Get region
    * @return region
   **/
-  @ApiModelProperty(value = "")
   public String getRegion() {
     return region;
   }
@@ -151,7 +148,6 @@ public class Query   {
    * Get district
    * @return district
   **/
-  @ApiModelProperty(value = "")
   public String getDistrict() {
     return district;
   }
@@ -169,7 +165,6 @@ public class Query   {
    * Get ward
    * @return ward
   **/
-  @ApiModelProperty(value = "")
   public String getWard() {
     return ward;
   }

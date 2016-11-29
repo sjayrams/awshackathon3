@@ -25,9 +25,9 @@
 
 package swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Objects;
 
 /**
  * Data
@@ -49,7 +49,6 @@ public class Data   {
    * Get charttype
    * @return charttype
   **/
-  @ApiModelProperty(value = "")
   public String getCharttype() {
     return charttype;
   }
@@ -67,7 +66,6 @@ public class Data   {
    * Get data
    * @return data
   **/
-  @ApiModelProperty(value = "")
   public String getData() {
     return data;
   }

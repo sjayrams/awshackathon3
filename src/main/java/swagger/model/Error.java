@@ -25,9 +25,9 @@
 
 package swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Objects;
 
 /**
  * Error
@@ -52,7 +52,6 @@ public class Error   {
    * Get code
    * @return code
   **/
-  @ApiModelProperty(value = "")
   public Integer getCode() {
     return code;
   }
@@ -70,7 +69,6 @@ public class Error   {
    * Get message
    * @return message
   **/
-  @ApiModelProperty(value = "")
   public String getMessage() {
     return message;
   }
@@ -88,7 +86,6 @@ public class Error   {
    * Get fields
    * @return fields
   **/
-  @ApiModelProperty(value = "")
   public String getFields() {
     return fields;
   }
