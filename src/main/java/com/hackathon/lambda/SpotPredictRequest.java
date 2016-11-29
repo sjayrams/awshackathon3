@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import swagger.model.Query.CountryEnum;
 
 public class SpotPredictRequest {
+	
 	Double lat;
 	Double lon;
 	CountryEnum country;
@@ -58,6 +59,7 @@ public class SpotPredictRequest {
 		spr.country=CountryEnum.TNZ;
 		spr.lat=0.0;
 		spr.lon=0.0;
+		spr.landscape=LandscapeEnum.L000;
 		Gson g=new Gson();
 		System.out.println(g.toJson(spr));
 	}
