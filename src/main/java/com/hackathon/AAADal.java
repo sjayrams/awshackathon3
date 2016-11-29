@@ -1,29 +1,20 @@
 package com.hackathon;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guptga1 on 11/28/16.
  */
 public class AAADal {
 
-    public static void main(String[] argv) throws SQLException {
+    public List<AAA> getResult(String lat, String lon) throws SQLException {
+
+        List<AAA> aaaList = new ArrayList<>();
 
         System.out.println("-------- PostgreSQL "
                 + "JDBC Connection Testing ------------");
-
-        try {
-
-            Class.forName("org.postgresql.Driver");
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-            return;
-
-        }
 
         System.out.println("PostgreSQL JDBC Driver Registered!");
 
@@ -32,14 +23,23 @@ public class AAADal {
         ResultSet rs = null;
 
         try {
-
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://db.runizar.net:5432/vitalsigns_staging", "postgres", "postgres");
             st = connection.createStatement();
-            rs = st.executeQuery("SELECT * FROM aaa");
+            rs = st.executeQuery("SELECT * FROM aaa where lat='" +lat + "' and lon='"+ lon +"'");
             while (rs.next())
             {
-                System.out.print("Column 1 returned ");
-                System.out.println(rs.getString(1));
+                AAA aaa = new AAA();
+                aaa.setCountry(rs.getString("country"));
+                aaa.setAccess(rs.getString("access"));
+                aaa.setCiaf(rs.getString("ciaf"));
+                aaa.setK(rs.getString("k"));
+                aaa.setN(rs.getString("n"));
+                aaa.setP(rs.getString("p"));
+                aaa.setLandscape(rs.getString("landscape"));
+                aaa.setLat(rs.getString("lat"));
+                aaa.setLon(rs.getString("lon"));
+                aaaList.add(aaa);
             }
 
 
@@ -47,20 +47,24 @@ public class AAADal {
 
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-            return;
-
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } finally {
             rs.close();
             st.close();
             connection.close();
         }
 
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-        }
-
+//        if (connection != null) {
+//            System.out.println("You made it, take control your database now!");
+//        } else {
+//            System.out.println("Failed to make connection!");
+//        }
+        return aaaList;
     }
 
+    public static void main(String[] args) throws SQLException {
+        AAADal aaaDal = new AAADal();
+        System.out.println(aaaDal.getResult("-1.809272314","29.38478538"));
+    }
 }
