@@ -45,7 +45,7 @@ public class Query   {
   public enum CountryEnum {
     KEN("Kenya"),
     
-    TNZ("Tanzania"),
+    TZA("Tanzania"),
     
     UGD("Uganda"),
     
