@@ -29,7 +29,7 @@ public class PostQueryLambda implements RequestHandler<QueryRequest, List<Query>
     private List<Query> loadQueries() {
         List<Query> queries = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            queries.add(new Query().country(Query.CountryEnum.GHANA).district(UUID.randomUUID().toString())
+            queries.add(new Query().country(Query.CountryEnum.GHN).district(UUID.randomUUID().toString())
                     .name(UUID.randomUUID().toString()).region(UUID.randomUUID().toString()).ward(UUID.randomUUID().toString()));
         }
         return queries;
