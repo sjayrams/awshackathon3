@@ -8,6 +8,15 @@ import java.util.List;
  * Created by guptga1 on 11/28/16.
  */
 public class AAADal {
+    Connection connection = null;
+    Statement st = null;
+
+    public AAADal() throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+        connection = DriverManager.getConnection("jdbc:postgresql://db.runizar.net:5432/vitalsigns_staging", "postgres", "postgres");
+
+    }
+
 
     public List<AAA> getData(String lat, String lon) throws SQLException {
 
@@ -17,14 +26,9 @@ public class AAADal {
                 + "JDBC Connection Testing ------------");
 
         System.out.println("PostgreSQL JDBC Driver Registered!");
-
-        Connection connection = null;
-        Statement st = null;
         ResultSet rs = null;
 
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://db.runizar.net:5432/vitalsigns_staging", "postgres", "postgres");
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM aaa where lat='" +lat + "' and lon='"+ lon +"'");
             while (rs.next())
@@ -47,12 +51,9 @@ public class AAADal {
 
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
+        }  finally {
             rs.close();
             st.close();
-            connection.close();
         }
 
 //        if (connection != null) {
@@ -72,13 +73,9 @@ public class AAADal {
 
         System.out.println("PostgreSQL JDBC Driver Registered!");
 
-        Connection connection = null;
-        Statement st = null;
         ResultSet rs = null;
 
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://db.runizar.net:5432/vitalsigns_staging", "postgres", "postgres");
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM aaa where country='" +country + "'");
             while (rs.next())
@@ -101,12 +98,9 @@ public class AAADal {
 
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
+        }  finally {
             rs.close();
             st.close();
-            connection.close();
         }
 
 //        if (connection != null) {
@@ -117,7 +111,7 @@ public class AAADal {
         return aaaList.size() > 100 ? aaaList.subList(0,99) : aaaList;
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         AAADal aaaDal = new AAADal();
         System.out.println(aaaDal.getData("-1.809272314","29.38478538"));
         System.out.println(aaaDal.getRandomLocationData("RWA"));
